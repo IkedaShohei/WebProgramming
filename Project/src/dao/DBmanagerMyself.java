@@ -29,10 +29,12 @@ public class DBmanagerMyself {
 	 url, user, passを取得した変数conを返す**/
 	
 	
-	private static Connection getConnection() {
+	public static Connection getConnection() {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+		/**Connection→スライド6-5参照**/
+		/**データベースへ接続**/
 			con = DriverManager.getConnection(url, user, pass);
 		}catch (SQLException  | ClassNotFoundException e) {
 			// TODO: handle exception
