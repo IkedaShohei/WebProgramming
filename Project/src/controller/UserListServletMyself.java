@@ -14,7 +14,7 @@ import dao.UserDaoMyself;
 import model.UserMyself;
 
 
-@WebServlet("/LoginListServletMyself")
+@WebServlet("/UserListServletMyself")
 public class UserListServletMyself extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,7 @@ public class UserListServletMyself extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.setContentType("text/html; charset=UTF-8");
 
 		/**ユーザの一覧情報を取得してBeansのリストにfindallメソッドで
 		 * リストに情報を持ったインスタンスを入れていく**/
@@ -43,9 +43,9 @@ public class UserListServletMyself extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
-		
+
 		/**フォームの中の情報で検索する機能をつける**/
-		
+
 	}
 
 }

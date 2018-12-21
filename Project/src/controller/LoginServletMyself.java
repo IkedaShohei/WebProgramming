@@ -74,7 +74,7 @@ public class LoginServletMyself extends HttpServlet {
 
 		/**属性名を指定してインスタンスを保存する
 		 * すでに同じ属性名でインスタンスが保存されている場合は上書きされる**/
-		session.setAttribute("userInfo", userMyself);
+		session.setAttribute("userInfoMyself", userMyself);
 
 		/**UserListServletMyselfのサーブレットにリダイレクト**/
 		response.sendRedirect("UserListServletMyself");

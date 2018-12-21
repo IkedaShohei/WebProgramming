@@ -15,9 +15,9 @@ public class DBmanagerMyself {
 	private static String dbName = "usermanagement";
 	private static String user = "root";
 	private static String pass ="password";
-	
+
 	/**DBへ接続するコネクションを返す**/
-	
+
 	/**Connection型のgetConnectionメソッド
 	 ⓵コネクション型の変数conをnullで初期化
 	 ↓tryの内容
@@ -27,20 +27,20 @@ public class DBmanagerMyself {
 	 クラスが見つからなかった場合スタックトレースを出力
 	 ④tryの場合はConnection型のgetConnectionメソッドを呼び出した結果として
 	 url, user, passを取得した変数conを返す**/
-	
-	
+
+
 	public static Connection getConnection() {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		/**Connection→スライド6-5参照**/
 		/**データベースへ接続**/
-			con = DriverManager.getConnection(url, user, pass);
+			con = DriverManager.getConnection(url+dbName, user, pass);
 		}catch (SQLException  | ClassNotFoundException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return con;
 	}
-	
+
 }

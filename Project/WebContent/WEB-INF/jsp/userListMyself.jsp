@@ -12,7 +12,7 @@
 	<div class="header">
 		<ul>
 			<li class="logout"><a href="LogoutServletMyself" class="under">ログアウト</a></li>
-			<li class="userName">{userInfo.name} さん</li>
+			<li class="userName">${userInfoMyself.name} さん</li>
 		</ul>
 	</div>
 	<div class="center">
@@ -21,7 +21,7 @@
 		<br>
 	<div class="right">
 		<div class= "under">
-			<p><a href="newSignUpMyself.jsp">新規登録</a></p>
+			<p><a href="NewSighUpServletMyself">新規登録</a></p>
 		</div>
 	</div>
 		<br>
@@ -52,16 +52,18 @@
 			<th>生年月日</th>
 			<th>　　　　</th>
 		</tr>
-		<tr><!-- 0001 -->
-			<td>id0001</td>
-			<td>田中太郎</td>
-			<td>1989年04月26日</td>
-			<td>
-				<input type="submit" value="詳細">
-				<input type="submit" value="更新">
-				<input type="submit" value="削除">
-			</td>
-		</tr>
+		<c:forEach var="userMyself" items="${userMyselfList}" >
+			<tr><!-- 0001 -->
+				<td>${userMyself.loginId}</td>
+				<td>${userMyself.name}</td>
+				<td>${userMyself.birthDate}</td>
+				<td>
+					<input type="submit" value="詳細">
+					<input type="submit" value="更新">
+					<input type="submit" value="削除">
+				</td>
+			</tr>
+		</c:forEach>
 		<tr><!-- 0002 -->
 			<td>id0002</td>
 			<td>佐藤二朗</td>

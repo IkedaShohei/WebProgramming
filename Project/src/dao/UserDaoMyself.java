@@ -83,14 +83,15 @@ public class UserDaoMyself {
     		ResultSet rs = stmt.executeQuery(sql);
 
     		/**結果表に格納されたレコードの内容をwhileを回してそれぞれ変数に入れていく**/
+    		/**getの中身はまだSQL語なのでテーブルのカラム名通りに入力していく**/
     		while(rs.next()){
     			int id = rs.getInt("id");
-    			String loginId = rs.getString("loginId");
+    			String loginId = rs.getString("login_Id");
     			String name = rs.getString("name");
-    			Date birthDate = rs.getDate("birthDate");
+    			Date birthDate = rs.getDate("birth_Date");
     			String password = rs.getString("password");
-    			String createDate = rs.getString("createDate");
-    			String updateDate = rs.getString("updateDate");
+    			String createDate = rs.getString("create_Date");
+    			String updateDate = rs.getString("update_Date");
     			/**UserMyselfのインスタンスを生成して設定してコンストラクタに引数を全部渡す
     			 上で作ったArrayListインスタンス(userMyselfList)に追加**/
     			UserMyself userMyself = new UserMyself(id,loginId,name,birthDate,password,createDate,updateDate);
