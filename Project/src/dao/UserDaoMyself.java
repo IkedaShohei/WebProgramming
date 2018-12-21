@@ -1,28 +1,121 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.UserMyself;
 
 public class UserDaoMyself {
 
-	public List<UserMyself>findall(){
+	/*ログイン用*/
+	/**主キーのidで検索ができるようにfindByメソッドを使う**/
+    public UserMyself findByLoginInfo(String loginId, String password){
 		Connection conn = null;
-		List<UserMyself> empList = new ArrayList<UserMyself>();
 
 		try {
-			//**データベースへ接続**/
-			conn = DBmanagerMyself.
+		/**データベースへ接続**/
+			conn = DBmanagerMyself.getConnection();
+
+		/**SELECT文を準備**/
+		/**PreparedStatementで入力したものをSELECTを実行してrsにexecuteQueryメソッドでセット**/
+		String sql = "SELECT * FROM user WHERE  login_id = ? and password = ?";
+
+		PreparedStatement pStmt = conn.prepareStatement(sql);
+		pStmt.setString(1, loginId);
+		pStmt.setString(2, password);
+		ResultSet rs = pStmt.executeQuery();
+
+		/**SQLでlogin_idはUNIQUEなのでrs.nextは1行でいい
+		 →だからwhileを回す必要がないのでifでnullを返せばOK**/
+		if (!rs.next()) {
+            return null;
+        }
+
+		/**rsにセットしたlogin_idとnameをUserMyselfのコンストラクタの引数にセットする
+		 そのために新しい変数を用意する**/
+        String loginIdData = rs.getString("login_id");
+        String nameData = rs.getString("name");
+        return new UserMyself(loginIdData, nameData);
+
+
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			return null;
+		}finally {
+			/**データベース切断する**/
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+		}
+    }
+
+    /*全部用*/
+		/**全部のユーザデータを取得する→スライド6-11**/
+
+    public List<UserMyself>findall(){
+    	Connection conn = null;
+    	List<UserMyself> userMyselfList = new ArrayList<UserMyself>();
+
+    	try {
+    		/**Connection**/
+    		/**データベースに接続**/
+    		conn = DBmanagerMyself.getConnection();
+
+    		/**SELECT文を準備**/
+    		/**これuserテーブルを全部**/
+    		String sql = "SELECT * FROM user";
+
+    		/**SELECTを実行して、結果の表を取得する**/
+    		/**取得してrsにexecuteQueryメソッドでセット**/
+    		Statement stmt = conn.createStatement();
+    		ResultSet rs = stmt.executeQuery(sql);
+
+    		/**結果表に格納されたレコードの内容をwhileを回してそれぞれ変数に入れていく**/
+    		while(rs.next()){
+    			int id = rs.getInt("id");
+    			String loginId = rs.getString("loginId");
+    			String name = rs.getString("name");
+    			Date birthDate = rs.getDate("birthDate");
+    			String password = rs.getString("password");
+    			String createDate = rs.getString("createDate");
+    			String updateDate = rs.getString("updateDate");
+    			/**UserMyselfのインスタンスを生成して設定してコンストラクタに引数を全部渡す
+    			 上で作ったArrayListインスタンス(userMyselfList)に追加**/
+    			UserMyself userMyself = new UserMyself(id,loginId,name,birthDate,password,createDate,updateDate);
+    			userMyselfList.add(userMyself);
+    		}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}finally{
+			/**データベースを切断する**/
+			/**finallyは例外をキャッチした場合もしてない場合も必ず実行する**/
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					return null;
+				}
+			}
 		}
 
-		return null;
+		return userMyselfList;
 
-	}
+    }
 
 }

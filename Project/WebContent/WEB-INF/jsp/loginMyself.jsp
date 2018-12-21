@@ -8,19 +8,31 @@
 	<title>ログイン画面</title>
 	<link  rel="stylesheet" href="MockTask.css">
 </head>
+
+
+
+<!-- もしDaoのメソッドを実行して入力されたデータが見つからなかった場合のメッセージ -->
+<c:if test="${errMsg != null}" >
+		  ${errMsg}
+</c:if>
+
 <body>
 	<h1 class="Login">ログイン画面</h1>
 		<br>
 		<br>
 		<br>
-	<div class="center">
-		ログインID<input type="text" name="loginId">
-		<br>
-		パスワード<input type="text" name="passWord">
-		<br>
-		<br>
-		<br>
-	<input type="submit" value="ログイン">
-	</div>
+
+<!-- こっからフォーム -->
+	<form action="LoginServletMyself" method="post">
+		<div class="center">
+			ログインID<input type="text" name="loginId">
+			<br>
+			パスワード<input type="text" name="password">
+			<br>
+			<br>
+			<br>
+		<input type="submit" value="ログイン">
+		</div>
+	</form>
 </body>
 </html>

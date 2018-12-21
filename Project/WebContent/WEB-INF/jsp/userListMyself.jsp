@@ -11,8 +11,8 @@
 <body>
 	<div class="header">
 		<ul>
-			<li class="logout"><a class="under">ログアウト</a></li>
-			<li class="userName">ユーザ名 さん</li>
+			<li class="logout"><a href="LogoutServletMyself" class="under">ログアウト</a></li>
+			<li class="userName">{userInfo.name} さん</li>
 		</ul>
 	</div>
 	<div class="center">
@@ -21,7 +21,7 @@
 		<br>
 	<div class="right">
 		<div class= "under">
-			<p><a href="NewSignUp.html">新規登録</a></p>
+			<p><a href="newSignUpMyself.jsp">新規登録</a></p>
 		</div>
 	</div>
 		<br>
