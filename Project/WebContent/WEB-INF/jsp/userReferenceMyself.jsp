@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザ情報詳細参照</title>
-<link  rel="stylesheet" href="MockTask.css">
+<link  rel="stylesheet" href="css/MockTask.css">
 </head>
 <body>
 	<div class="header">

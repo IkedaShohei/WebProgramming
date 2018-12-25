@@ -120,7 +120,7 @@ public class UserDaoMyself {
     }
 
 //    INSERTするメソッドを作る
-    public  UserMyself NewSighUpInfo(String loginId, String userName, String password, String birthDay){
+    public  UserMyself NewSighUpInfo(String loginId, String userName, String password, String birthDay)throws SQLException{
     	Connection conn = null;
 
     	try {
@@ -146,7 +146,7 @@ public class UserDaoMyself {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return null;
+			throw e;
 		}finally{
 			/**データベースを切断する**/
 			/**finallyは例外をキャッチした場合もしてない場合も必ず実行する**/

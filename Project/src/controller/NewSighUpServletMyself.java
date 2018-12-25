@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -57,16 +58,66 @@ public class NewSighUpServletMyself extends HttpServlet {
 		String birthDay = request.getParameter("birthDay");
 
 
-		/**この後のリクエストスコープ、セッションスコープを保存するための
+		/**登録失敗時
+		 * ・ユーザ新規登録に戻る。
+		 * ・その時、ページ名の下に赤色で「入力された内容は正しくありません」と表示する。
+		 * ・入力下内容は引き継がれるけど、パスワードとパスワード（確認）だけは空欄にする。**/
+
+//		→パスワードとパスワード（確認）が合わなかった時
+		if(password != passwordConfirmation) {
+			request.setAttribute("errMsg", "入力された内容は正しくありません。");
+
+			request.setAttribute("loginId",loginId);
+			request.setAttribute("userName",userName);
+			request.setAttribute("birthDay",birthDay);
+
+			/**newSighUpServletMyself.jspにフォワード**/
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newSighUpMyself.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+
+//どれか１つでも入力欄が空だった場合
+		if(loginId == null || password == null || passwordConfirmation == null || userName == null || birthDay == null) {
+			request.setAttribute("errMsg", "入力された内容は正しくありません。");
+
+			/**newSighUpServletMyself.jspにフォワード**/
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newSighUpMyself.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+
+
+		/**
 		 * UserDaoMyselfのインスタンスを作って UserMyself型のuserMyselfに
-		 * userDaoMyselfのfindByLoginInfoメソッドに引数を渡す
+		 * userDaoMyselfのNewSighUpInfoメソッドに引数を渡す
 		 * →Daoのメソッドが実行される**/
 
-		/**作ったインサート文を呼び出して**/
+		/**作ったインサート文をテーブルに追加するメソッドを実行**/
 		UserDaoMyself userDaoMyself = new UserDaoMyself();
-		userDaoMyself.NewSighUpInfo(loginId, userName, password, birthDay);
+	//すでに登録している時の弾きをcatchで表現
+		try {
+			userDaoMyself.NewSighUpInfo(loginId, userName, password, birthDay);
+		} catch(SQLException e) {
 
-		/**登録成功時：ユーザー一覧画面に遷移する**/
+			//UserDaoMyselfのNewSighUpInfoでスロー宣言されていて
+			//catchの中でthrowされている例外をこっちでも検知できるように
+			//trycatchで囲む
+
+			request.setAttribute("errMsg", "入力された内容は正しくありません。");
+
+			request.setAttribute("loginId",loginId);
+			request.setAttribute("userName",userName);
+			request.setAttribute("birthDay",birthDay);
+
+			/**newSighUpServletMyself.jspにフォワード**/
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/newSighUpMyself.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+
+
+	/**登録成功時：ユーザー一覧画面に遷移する**/
 		/**UserListServletMyselfのサーブレットにリダイレクト**/
 //		UserListServletMyselfにリダイレクト
 //		データはUserListServletMyselfが表示させる
@@ -74,32 +125,6 @@ public class NewSighUpServletMyself extends HttpServlet {
 
 
 
-		/**登録失敗時
-		 * ・ユーザ新規登録に戻る。
-		 * ・その時、ページ名の下に赤色で「入力された内容は正しくありません」と表示する。
-		 * ・入力下内容は引き継がれるけど、パスワードとパスワード（確認）だけは空欄にする。**/
-
-//		入力内容引き継がれる→セッションスコープ？
-//		パスワード関連のところだけリクエストスコープにする？
-//		分岐のさせかた
-//		値を残したままだからフォワードで「ユーザ新規登録」遷移
-//
-//		失敗する場合
-//		→すでに登録されてる時
-//		→データ型が合わない時？
-//		→sqlのインサートがうまくできない文字の場合？
-//		からの場合
-//
-
-
-//		ログインサーブレットから引用
-//		if(userMyself == null) {
-//			request.setAttribute("errMsg", "入力された内容は正しくありません");
-//
-//		/**loginMyself.jspにフォワード**/
-//			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginMyself.jsp");
-//			dispatcher.forward(request, response);
-//			return;
 		}
 
 
