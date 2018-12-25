@@ -64,7 +64,7 @@ public class UserDaoMyself {
     /*全部用*/
 		/**全部のユーザデータを取得する→スライド6-11**/
 
-    public List<UserMyself>findall(){
+    public List<UserMyself> findall(){
     	Connection conn = null;
     	List<UserMyself> userMyselfList = new ArrayList<UserMyself>();
 
@@ -120,9 +120,8 @@ public class UserDaoMyself {
     }
 
 //    INSERTするメソッドを作る
-    public List<UserMyself>insertall(){
+    public  UserMyself NewSighUpInfo(String loginId, String userName, String password, String birthDay){
     	Connection conn = null;
-    	List<UserMyself> userMyselfList = new ArrayList<UserMyself>();
 
     	try {
     		/**Connection**/
@@ -131,30 +130,19 @@ public class UserDaoMyself {
 
     		/**INSERT文を準備**/
     		/**これuserテーブルを全部**/
-    		String sql = "INSERT INTO user VALUES ('login_id', 'name', 'birth_date', 'password', 'create_date', 'update_date')";
+    		String sql = "INSERT INTO user (login_id, name, birth_date, password, create_date, update_date)VALUES ( ?, ?, ?, ?, now(), now())";
 
     		//ここから
 
-    		/**SELECTを実行して、結果の表を取得する**/
-    		/**取得してrsにexecuteQueryメソッドでセット**/
-    		Statement stmt = conn.createStatement();
-    		ResultSet rs = stmt.executeQuery(sql);
+    		/**INSERTを実行して、情報をテーブルに送信する**/
+    		/**取得してrsにexecuteUpdateメソッドでセット→スライド6-9**/
+    		PreparedStatement pStmt = conn.prepareStatement(sql);
+    		pStmt.setString(1, loginId);
+    		pStmt.setString(2, userName);
+    		pStmt.setString(3, birthDay);
+    		pStmt.setString(4, password);
+    		pStmt.executeUpdate();
 
-    		/**結果表に格納されたレコードの内容をwhileを回してそれぞれ変数に入れていく**/
-    		/**getの中身はまだSQL語なのでテーブルのカラム名通りに入力していく**/
-    		while(rs.next()){
-    			int id = rs.getInt("id");
-    			String loginId = rs.getString("login_Id");
-    			String name = rs.getString("name");
-    			Date birthDate = rs.getDate("birth_Date");
-    			String password = rs.getString("password");
-    			String createDate = rs.getString("create_Date");
-    			String updateDate = rs.getString("update_Date");
-    			/**UserMyselfのインスタンスを生成して設定してコンストラクタに引数を全部渡す
-    			 上で作ったArrayListインスタンス(userMyselfList)に追加**/
-    			UserMyself userMyself = new UserMyself(id,loginId,name,birthDate,password,createDate,updateDate);
-    			userMyselfList.add(userMyself);
-    		}
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -172,9 +160,7 @@ public class UserDaoMyself {
 				}
 			}
 		}
-
-		return userMyselfList;
-
+		return null;
     }
 
 }

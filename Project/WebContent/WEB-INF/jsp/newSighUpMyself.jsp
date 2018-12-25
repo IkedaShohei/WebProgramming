@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザ新規登録</title>
-<link  rel="stylesheet" href="MockTask.css">
+<link  rel="stylesheet" href="css/MockTask.css">
 </head>
 <body>
 	<div class="header">
@@ -15,12 +15,12 @@
 			<li class="userName">${userInfoMyself.name} さん</li>
 		</ul>
 	</div>
-	
+
 	<!-- もし登録が失敗した時 ログインjspからの引用-->
 	<c:if test="${errMsg != null}" >
 			  ${errMsg}
 	</c:if>
-	
+
 	<div class="center">
 		<h1>ユーザ新規登録</h1>
 	</div>

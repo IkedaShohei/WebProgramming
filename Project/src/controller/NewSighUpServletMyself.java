@@ -8,10 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.UserDaoMyself;
-import model.UserMyself;
 
 /**
  * Servlet implementation class NewSighUpServletMyself
@@ -52,47 +50,27 @@ public class NewSighUpServletMyself extends HttpServlet {
 		/**リクエストパラメータの取得**/
 		/**getParameter()メソッドにformで指定したリクエストパラメータの名前を
 		引数にすることでパラメータが取得できる**/
+		String loginId = request.getParameter("loginId");
+		String password = request.getParameter("password");
+		String passwordConfirmation = request.getParameter("passwordConfirmation");
+		String userName = request.getParameter("userName");
+		String birthDay = request.getParameter("birthDay");
 
 
 		/**この後のリクエストスコープ、セッションスコープを保存するための
-		 * UserDaoMyselfのインスタンス（JavaBeansのインスタンス）を作って UserMyself型のuserMyselfに
-		 * userMyselfのfindByLoginInfoメソッドに引数を渡す
+		 * UserDaoMyselfのインスタンスを作って UserMyself型のuserMyselfに
+		 * userDaoMyselfのfindByLoginInfoメソッドに引数を渡す
 		 * →Daoのメソッドが実行される**/
 
-	//ここから〜64行目まで　リクエストスコープ→スライドの4-14
+		/**作ったインサート文を呼び出して**/
 		UserDaoMyself userDaoMyself = new UserDaoMyself();
-		UserMyself userMyself =(UserMyself) userDaoMyself.findall();
-
-	//ここに見つからなかった時の分岐を記入
-
-
-		/**もしDaoのメソッドを実行して入力されたデータが見つかった場合 **/
-		// ここからセッションスコープ　→スライド4-17
-
-		/**HttpServletインスタンスのgetSession()メソッドでHttpSessionインスタンスを取得**/
-		HttpSession session = request.getSession();
-
-		/**属性名を指定してインスタンスを保存する
-		 * すでに同じ属性名でインスタンスが保存されている場合は上書きされる**/
-		session.setAttribute("userInfoMyself", userMyself);
-
-		/**UserListServletMyselfのサーブレットにリダイレクト**/
-		response.sendRedirect("UserListServletMyself");
-
-
-
-
+		userDaoMyself.NewSighUpInfo(loginId, userName, password, birthDay);
 
 		/**登録成功時：ユーザー一覧画面に遷移する**/
-
-
-
-
-
-
+		/**UserListServletMyselfのサーブレットにリダイレクト**/
 //		UserListServletMyselfにリダイレクト
 //		データはUserListServletMyselfが表示させる
-
+		response.sendRedirect("UserListServletMyself");
 
 
 

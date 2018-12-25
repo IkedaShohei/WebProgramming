@@ -6,7 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>ログイン画面</title>
-	<link  rel="stylesheet" href="MockTask.css">
+	<link  rel="stylesheet" href="css/MockTask.css">
 </head>
 
 
