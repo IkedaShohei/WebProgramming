@@ -11,33 +11,41 @@
 <body>
 	<div class="header">
 		<ul>
-			<li class="logout"><a class="under">ログアウト</a></li>
-			<li class="userName">ユーザ名 さん</li>
+			<li class="logout"><a  href="LogoutServletMyself" class="under">ログアウト</a></li>
+			<li class="userName">${userInfoMyself.name} さん</li>
 		</ul>
 	</div>
+	
+	<!-- もし登録が失敗した時 ログインjspからの引用-->
+	<c:if test="${errMsg != null}" >
+			  ${errMsg}
+	</c:if>
+	
 	<div class="center">
 		<h1>ユーザ新規登録</h1>
 	</div>
 	<br>
-	<div class="center">
-		<a>ログインID</a><input type="text" name="loginId">
-		<br>
-		<br>
-		<a>パスワード</a><input type="text" name="passWord">
-		<br>
-		<br>
-		<a>パスワード（確認）</a><input type="text" name="loginId">
-		<br>
-		<br>
-		<a>ユーザ名</a><input type="text" name="userName">
-		<br>
-		<br>
-		<a>生年月日</a><input type="text" name="birthday">
-		<br>
-		<br>
-		<br>
-	<input type="submit" value="登録">
-	</div>
+	<form action="NewSighUpServletMyself" method="post">
+		<div class="center">
+			<a>ログインID</a><input type="text" name="loginId">
+			<br>
+			<br>
+			<a>パスワード</a><input type="text" name="password">
+			<br>
+			<br>
+			<a>パスワード（確認）</a><input type="text" name="passwordConfirmation">
+			<br>
+			<br>
+			<a>ユーザ名</a><input type="text" name="userName">
+			<br>
+			<br>
+			<a>生年月日</a><input type="text" name="birthDay">
+			<br>
+			<br>
+			<br>
+		<input type="submit" value="登録">
+		</div>
+	</form>
 	<br>
 	<br>
 	<br>

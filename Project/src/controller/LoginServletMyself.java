@@ -47,8 +47,8 @@ public class LoginServletMyself extends HttpServlet {
 		String password = request.getParameter("password");
 
 
-		/**この後のリクエストスコープ、セッションスコープを保存するための
-		 * UserDaoMyselfのインスタンス（JavaBeansのインスタンス）を作って UserMyself型のuserMyselfに
+		/**この後のリクエストスコープ、セッションスコープに保存するための
+		 * UserDaoMyselfのインスタンスを作って UserMyself型のuserMyselfに
 		 * userMyselfのfindByLoginInfoメソッドに引数を渡す
 		 * →Daoのメソッドが実行される**/
 

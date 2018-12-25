@@ -119,4 +119,62 @@ public class UserDaoMyself {
 
     }
 
+//    INSERTするメソッドを作る
+    public List<UserMyself>insertall(){
+    	Connection conn = null;
+    	List<UserMyself> userMyselfList = new ArrayList<UserMyself>();
+
+    	try {
+    		/**Connection**/
+    		/**データベースに接続**/
+    		conn = DBmanagerMyself.getConnection();
+
+    		/**INSERT文を準備**/
+    		/**これuserテーブルを全部**/
+    		String sql = "INSERT INTO user VALUES ('login_id', 'name', 'birth_date', 'password', 'create_date', 'update_date')";
+
+    		//ここから
+
+    		/**SELECTを実行して、結果の表を取得する**/
+    		/**取得してrsにexecuteQueryメソッドでセット**/
+    		Statement stmt = conn.createStatement();
+    		ResultSet rs = stmt.executeQuery(sql);
+
+    		/**結果表に格納されたレコードの内容をwhileを回してそれぞれ変数に入れていく**/
+    		/**getの中身はまだSQL語なのでテーブルのカラム名通りに入力していく**/
+    		while(rs.next()){
+    			int id = rs.getInt("id");
+    			String loginId = rs.getString("login_Id");
+    			String name = rs.getString("name");
+    			Date birthDate = rs.getDate("birth_Date");
+    			String password = rs.getString("password");
+    			String createDate = rs.getString("create_Date");
+    			String updateDate = rs.getString("update_Date");
+    			/**UserMyselfのインスタンスを生成して設定してコンストラクタに引数を全部渡す
+    			 上で作ったArrayListインスタンス(userMyselfList)に追加**/
+    			UserMyself userMyself = new UserMyself(id,loginId,name,birthDate,password,createDate,updateDate);
+    			userMyselfList.add(userMyself);
+    		}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}finally{
+			/**データベースを切断する**/
+			/**finallyは例外をキャッチした場合もしてない場合も必ず実行する**/
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+
+		return userMyselfList;
+
+    }
+
 }
