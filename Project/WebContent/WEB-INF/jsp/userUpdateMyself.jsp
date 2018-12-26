@@ -15,11 +15,17 @@
 			<li class="userName">ユーザ名 さん</li>
 		</ul>
 	</div>
+	<div class="errRed">
+		<c:if test="${errMsg != null}" >
+				  ${errMsg}
+		</c:if>
+	</div>
+	
 	<div class="center">
 			<h1>ユーザ情報更新</h1>
 		<br>
 		<div class="information">
-			<div><span>ログインID</span><span>id0001</span></div>
+			<div><span>ログインID</span><span>${userMyself.id}</span></div>
 			<br>
 			<br>
 			<div><span>パスワード</span><span><input type="text" name="passWord"></span></div>
@@ -28,10 +34,10 @@
 			<div><span>パスワード（確認）</span><span><input type="text" name="loginId"></span></div>
 			<br>
 			<br>
-			<div><span>ユーザ名</span><span><input type="text" name="userName"></span></div>
+			<div><span>ユーザ名</span><span><input type="text" name="userName" value="${userMyself.userName}"></span></div>
 			<br>
 			<br>
-			<div><span>生年月日</span><span><input type="text" name="birthday"></span></div>
+			<div><span>生年月日</span><span><input type="text" name="birthday" value="${userMyself.birthDay}"></span></div>
 		</div>
 		<br>
 		<br>

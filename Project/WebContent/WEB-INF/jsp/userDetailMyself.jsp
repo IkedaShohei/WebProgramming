@@ -19,19 +19,19 @@
 			<h1>ユーザ情報詳細参照</h1>
 		<br>
 		<div class="information">
-			<div><span>ログインID</span><span>id0001</span></div>
+			<div><span>ログインID</span><span>${userMyself.loginId}</span></div>
 			<br>
 			<br>
-			<div><span>ユーザ名</span><span>田中太郎</span></div>
+			<div><span>ユーザ名</span><span>${userMyself.name}</span></div>
 			<br>
 			<br>
-			<div><span>生年月日</span><span>1989年04月26日</span></div>
+			<div><span>生年月日</span><span>${userMyself.birthDate}</span></div>
 			<br>
 			<br>
-			<div><span>登録日時</span><span>2017年01月01日　10:50</span></div>
+			<div><span>登録日時</span><span>${userMyself.createDate}</span></div>
 			<br>
 			<br>
-			<div><span>更新日時</span><span>2017年02月01日　01:05</span></div>
+			<div><span>更新日時</span><span>${userMyself.updateDate}</span></div>
 		</div>
 	</div>
 	<br>

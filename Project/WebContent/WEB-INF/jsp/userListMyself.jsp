@@ -58,32 +58,12 @@
 				<td>${userMyself.name}</td>
 				<td>${userMyself.birthDate}</td>
 				<td>
-					<input type="submit" value="詳細">
-					<input type="submit" value="更新">
-					<input type="submit" value="削除">
+					 <a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
+                     <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
+                     <a class="btn btn-danger" href ="UserDeleteServletMyself?id=${userMyself.id}">削除</a>
 				</td>
 			</tr>
 		</c:forEach>
-		<tr><!-- 0002 -->
-			<td>id0002</td>
-			<td>佐藤二朗</td>
-			<td>2001年11月12日</td>
-			<td>
-				<input type="submit" value="詳細">
-				<input type="submit" value="更新">
-				<input type="submit" value="削除">
-			</td>
-		</tr>
-		<tr><!-- 0003 -->
-			<td>id0003</td>
-			<td>佐川真司</td>
-			<td>2000年01年01日</td>
-			<td>
-				<input type="submit" value="詳細">
-				<input type="submit" value="更新">
-				<input type="submit" value="削除">
-			</td>
-		</tr>
 		</table>
 </body>
 </html>

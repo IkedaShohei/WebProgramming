@@ -146,6 +146,8 @@ public class UserDaoMyself {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
+	//Dao内だけでなくNewSighUpServletでも例外を検知できるようにreturn = nullではなく
+	//SQLExceptionをthrow e で投げる。
 			throw e;
 		}finally{
 			/**データベースを切断する**/
@@ -163,4 +165,68 @@ public class UserDaoMyself {
 		return null;
     }
 
+
+
+
+/**取得したIDからSELECT文で一列丸ごとデータ持ってきてインスタンスに詰め込むメソッドを作る
+ * @throws SQLException **/
+public UserMyself getDetail(int id2){
+	Connection conn = null;
+	UserMyself userMyself = null;
+
+	try {
+		/**Connection**/
+		/**データベースに接続**/
+		conn = DBmanagerMyself.getConnection();
+
+		/**SELECT文を準備**/
+		/**これuserテーブルを全部**/
+		String sql = "SELECT * FROM user WHERE id = ?";
+
+		/**SELECTを実行して、結果の表を取得する**/
+		/**取得してrsにexecuteQueryメソッドでセット**/
+		PreparedStatement pStmt = conn.prepareStatement(sql);
+		pStmt.setInt(1, id2);
+		ResultSet rs = pStmt.executeQuery();
+
+		/**結果表に格納されたレコードの内容をwhileを回してそれぞれ変数に入れていく**/
+		/**getの中身はまだSQL語なのでテーブルのカラム名通りに入力していく**/
+		//これは1人分なのでif文でもいい
+		while(rs.next()){
+			int id = rs.getInt("id");
+			String loginId = rs.getString("login_Id");
+			String name = rs.getString("name");
+			Date birthDate = rs.getDate("birth_Date");
+			String password = rs.getString("password");
+			String createDate = rs.getString("create_Date");
+			String updateDate = rs.getString("update_Date");
+			/**UserMyselfのインスタンスを生成して設定してコンストラクタに引数を全部渡す
+			 上で作ったArrayListインスタンス(userMyselfList)に追加**/
+			userMyself = new UserMyself(id,loginId,name,birthDate,password,createDate,updateDate);
+		}
+	} catch (SQLException e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		return null;
+	}finally{
+		/**データベースを切断する**/
+		/**finallyは例外をキャッチした場合もしてない場合も必ず実行する**/
+		if(conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+	return userMyself;
+	}
 }
+
+
+
+
+
+

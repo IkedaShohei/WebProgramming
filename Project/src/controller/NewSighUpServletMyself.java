@@ -64,7 +64,7 @@ public class NewSighUpServletMyself extends HttpServlet {
 		 * ・入力下内容は引き継がれるけど、パスワードとパスワード（確認）だけは空欄にする。**/
 
 //		→パスワードとパスワード（確認）が合わなかった時
-		if(password != passwordConfirmation) {
+		if(!(password.equals(passwordConfirmation))) {
 			request.setAttribute("errMsg", "入力された内容は正しくありません。");
 
 			request.setAttribute("loginId",loginId);
@@ -78,7 +78,7 @@ public class NewSighUpServletMyself extends HttpServlet {
 		}
 
 //どれか１つでも入力欄が空だった場合
-		if(loginId == null || password == null || passwordConfirmation == null || userName == null || birthDay == null) {
+		if(loginId.equals("") || password.equals("") || passwordConfirmation.equals("") || userName.equals("") || birthDay.equals("")) {
 			request.setAttribute("errMsg", "入力された内容は正しくありません。");
 
 			/**newSighUpServletMyself.jspにフォワード**/
@@ -123,11 +123,7 @@ public class NewSighUpServletMyself extends HttpServlet {
 //		データはUserListServletMyselfが表示させる
 		response.sendRedirect("UserListServletMyself");
 
-
-
 		}
-
-
 	}
 
 
