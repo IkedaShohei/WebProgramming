@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.UserDaoMyself;
+import model.UserMyself;
+
 /**
  * Servlet implementation class UserUpdateServletMyself
  */
@@ -30,8 +33,17 @@ public class UserUpdateServletMyself extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		// URLからGETパラメータとしてIDを受け取る
+		String id1 = request.getParameter("id");
+		int id = Integer.parseInt(id1);
 
-		/**とりあえずフォワード**/
+		// idを引数にして、idに紐づくユーザ情報を出力する
+		UserDaoMyself userDaoMyself = new UserDaoMyself();
+		UserMyself userMyself = userDaoMyself.getDetail(id);
+
+		request.setAttribute("userMyself", userMyself);
+
+		/**フォワード**/
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userUpdateMyself.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -48,29 +60,35 @@ public class UserUpdateServletMyself extends HttpServlet {
 		/**リクエストパラメータの取得**/
 		/**getParameter()メソッドにformで指定したリクエストパラメータの名前を
 		引数にすることでパラメータが取得できる**/
-		String password = request.getParameter("password");
+		String id1 = request.getParameter("id");
+		int id = Integer.parseInt(id1);
+		String password = request.getParameter("passWord");
 		String passwordConfirmation = request.getParameter("passwordConfirmation");
-		String userName = request.getParameter("userName");
-		String birthDay = request.getParameter("birthDay");
+		String name = request.getParameter("userName");
+		String birthDay = request.getParameter("birthday");
 
 
-
-
-
-
-
-
+		//パスワードとパスワード（確認）が一致しなかった時
 		if(!(password.equals(passwordConfirmation))) {
 			request.setAttribute("errMsg", "入力された内容は正しくありません。");
 
-			request.setAttribute("userName",userName);
-			request.setAttribute("birthDay",birthDay);
-
-
-		/**userDeteilMyself.jspにフォワード**/
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userUpdateMyself.jsp");
-		dispatcher.forward(request, response);
+			/**UserUpdateServletMyselfにフォワード**/
+			doGet(request, response);
+			return;
 		}
+
+		//ユーザ名または生年月日が空だった場合
+		if(name.equals("") || birthDay.equals("")) {
+				request.setAttribute("errMsg", "入力された内容は正しくありません。");
+
+			/**UserUpdateServletMyselfにフォワード**/
+			doGet(request, response);
+			return;
+		}
+
+		UserDaoMyself userDaoMyself = new UserDaoMyself();
+		userDaoMyself.upDate(password, name, birthDay, id);
+
 
 		/**登録成功時：ユーザー一覧画面に遷移する**/
 		/**UserListServletMyselfのサーブレットにリダイレクト**/

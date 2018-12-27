@@ -124,6 +124,7 @@ public class NewSighUpServletMyself extends HttpServlet {
 		response.sendRedirect("UserListServletMyself");
 
 		}
+
 	}
 
 

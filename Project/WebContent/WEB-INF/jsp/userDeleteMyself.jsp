@@ -11,15 +11,15 @@
 <body>
 	<div class="header">
 		<ul>
-			<li class="logout"><a class="under">ログアウト</a></li>
-			<li class="userName">ユーザ名 さん</li>
+			<li class="logout"><a class="under" href="LogoutServletMyself">ログアウト</a></li>
+			<li class="userName">${userInfoMyself.name} さん</li>
 		</ul>
 	</div>
 	<div class="center">
 			<h1>ユーザ削除確認</h1>
 	<br>
 	<br>
-	<div><P>ログインID：id0001</P></div>
+	<div><P>ログインID：${userMyself.loginId}</P></div>
 	<div>を本当に削除してよろしいでしょうか。</div>
 	<br>
 	<br>
@@ -27,7 +27,13 @@
 	<br>
 	<br>
 	<br>
-	<span class="bottun"><input type="submit" value="キャンセル"></span><span class="bottun"><input type="submit" value="OK"></span>
+	<form action="UserDeleteCancelServlet" method="get">
+		<span class="bottun"><input type="submit" value="キャンセル"></span>
+	</form>
+	<form action="UserDeleteServletMyself" method="post">
+		<input type="hidden" value="${userMyself.id}" name="id">
+		<span class="bottun"><input type="submit" value="OK"></span>
+	</form>
 	</div>
 
 </body>

@@ -223,6 +223,94 @@ public UserMyself getDetail(int id2){
 	}
 	return userMyself;
 	}
+
+
+//ユーザ情報更新のためのメソッド
+public UserMyself upDate(String password,String name,String birth_Date,int id){
+	Connection conn = null;
+
+
+	try {
+		/**Connection**/
+		/**データベースに接続**/
+		conn = DBmanagerMyself.getConnection();
+
+		/**SELECT文を準備**/
+		/**これuserテーブルを全部**/
+		String sql = "UPDATE user SET password =?,name = ?,birth_Date = ? WHERE id = ?";
+
+		/**SELEを実行して、結果の表を取得する**/
+		/**取得してrsにexecuteQueryメソッドでセット**/
+		PreparedStatement pStmt = conn.prepareStatement(sql);
+		pStmt.setString(1, password);
+		pStmt.setString(2, name);
+		pStmt.setString(3, birth_Date);
+		pStmt.setInt(4, id);
+		pStmt.executeUpdate();
+
+
+	} catch (SQLException e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		return null;
+	}finally{
+		/**データベースを切断する**/
+		/**finallyは例外をキャッチした場合もしてない場合も必ず実行する**/
+		if(conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+	return null;
+	}
+
+public  UserMyself delate(int id){
+	Connection conn = null;
+
+	try {
+		/**Connection**/
+		/**データベースに接続**/
+		conn = DBmanagerMyself.getConnection();
+
+		/**INSERT文を準備**/
+		/**これuserテーブルを全部**/
+		String sql = " DELETE FROM user WHERE id = ?";
+
+		//ここから
+
+		/**INSERTを実行して、情報をテーブルに送信する**/
+		/**取得してrsにexecuteUpdateメソッドでセット→スライド6-9**/
+		PreparedStatement pStmt = conn.prepareStatement(sql);
+		pStmt.setInt(1, id);
+		pStmt.executeUpdate();
+
+	} catch (SQLException e) {
+		// TODO: handle exception
+		e.printStackTrace();
+//Dao内だけでなくNewSighUpServletでも例外を検知できるようにreturn = nullではなく
+//SQLExceptionをthrow e で投げる。
+		return null;
+	}finally{
+		/**データベースを切断する**/
+		/**finallyは例外をキャッチした場合もしてない場合も必ず実行する**/
+		if(conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+	return null;
+}
+
 }
 
 

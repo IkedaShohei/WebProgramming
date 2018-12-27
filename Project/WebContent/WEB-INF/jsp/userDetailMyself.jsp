@@ -11,8 +11,8 @@
 <body>
 	<div class="header">
 		<ul>
-			<li class="logout"><a class="under">ログアウト</a></li>
-			<li class="userName">ユーザ名 さん</li>
+			<li class="logout"><a href="LogoutServletMyself" class="under">ログアウト</a></li>
+			<li class="userName">${userInfoMyself.name} さん</li>
 		</ul>
 	</div>
 	<div class="center">

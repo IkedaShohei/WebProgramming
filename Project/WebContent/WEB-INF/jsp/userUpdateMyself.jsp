@@ -11,37 +11,44 @@
 <body>
 	<div class="header">
 		<ul>
-			<li class="logout"><a class="under">ログアウト</a></li>
-			<li class="userName">ユーザ名 さん</li>
+			<li class="logout"><a href="LogoutServletMyself" class="under">ログアウト</a></li>
+			<li class="userName">${userInfoMyself.name} さん</li>
 		</ul>
 	</div>
+
+<!-- 	失敗時の表示-->
 	<div class="errRed">
 		<c:if test="${errMsg != null}" >
 				  ${errMsg}
 		</c:if>
 	</div>
-	
+
 	<div class="center">
 			<h1>ユーザ情報更新</h1>
 		<br>
 		<div class="information">
-			<div><span>ログインID</span><span>${userMyself.id}</span></div>
+
+
+			<div><span>ログインID</span><span>${userMyself.loginId}</span></div>
 			<br>
 			<br>
-			<div><span>パスワード</span><span><input type="text" name="passWord"></span></div>
-			<br>
-			<br>
-			<div><span>パスワード（確認）</span><span><input type="text" name="loginId"></span></div>
-			<br>
-			<br>
-			<div><span>ユーザ名</span><span><input type="text" name="userName" value="${userMyself.userName}"></span></div>
-			<br>
-			<br>
-			<div><span>生年月日</span><span><input type="text" name="birthday" value="${userMyself.birthDay}"></span></div>
+			<form action="UserUpdateServletMyself" method="post">
+				<input type="hidden" value="${userMyself.id}" name="id">
+				<div><span>パスワード</span><span><input type="text" name="passWord"></span></div>
+				<br>
+				<br>
+				<div><span>パスワード（確認）</span><span><input type="text" name="passwordConfirmation"></span></div>
+				<br>
+				<br>
+				<div><span>ユーザ名</span><span><input type="text" name="userName" value="${userMyself.name}"></span></div>
+				<br>
+				<br>
+				<div><span>生年月日</span><span><input type="text" name="birthday" value="${userMyself.birthDate}"></span></div>
+				<br>
+				<br>
+				<div class="center"><input type="submit" value="更新"></div>
+			</form>
 		</div>
-		<br>
-		<br>
-		<div><input type="submit" value="更新"></div>
 	</div>
 	<br>
 	<br>
