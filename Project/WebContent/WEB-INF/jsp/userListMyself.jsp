@@ -53,16 +53,20 @@
 			<th>　　　　</th>
 		</tr>
 		<c:forEach var="userMyself" items="${userMyselfList}" >
-			<tr><!-- 0001 -->
-				<td>${userMyself.loginId}</td>
-				<td>${userMyself.name}</td>
-				<td>${userMyself.birthDate}</td>
-				<td>
+
+				<tr>
+					<td>${userMyself.loginId}</td>
+					<td>${userMyself.name}</td>
+					<td>${userMyself.birthDate}</td>
+					<td>
+	<!-- 	もし管理者じゃなかったら -->
 					 <a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
-                     <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
-                     <a class="btn btn-danger" href ="UserDeleteServletMyself?id=${userMyself.id}">削除</a>
-				</td>
-			</tr>
+	                 <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
+	                 <a class="btn btn-danger" href ="UserDeleteServletMyself?id=${userMyself.id}">削除</a>
+
+					</td>
+				</tr>
+
 		</c:forEach>
 		</table>
 </body>

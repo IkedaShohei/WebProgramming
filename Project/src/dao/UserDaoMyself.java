@@ -1,5 +1,9 @@
 package dao;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.DatatypeConverter;
 
 import model.UserMyself;
 
@@ -26,9 +32,10 @@ public class UserDaoMyself {
 		/**PreparedStatementで入力したものをSELECTを実行してrsにexecuteQueryメソッドでセット**/
 		String sql = "SELECT * FROM user WHERE  login_id = ? and password = ?";
 
+		String passwordCode = encryption(password);
 		PreparedStatement pStmt = conn.prepareStatement(sql);
 		pStmt.setString(1, loginId);
-		pStmt.setString(2, password);
+		pStmt.setString(2, passwordCode);
 		ResultSet rs = pStmt.executeQuery();
 
 		/**SQLでlogin_idはUNIQUEなのでrs.nextは1行でいい
@@ -136,11 +143,12 @@ public class UserDaoMyself {
 
     		/**INSERTを実行して、情報をテーブルに送信する**/
     		/**取得してrsにexecuteUpdateメソッドでセット→スライド6-9**/
+    		String passwordCode = encryption(password);
     		PreparedStatement pStmt = conn.prepareStatement(sql);
     		pStmt.setString(1, loginId);
     		pStmt.setString(2, userName);
     		pStmt.setString(3, birthDay);
-    		pStmt.setString(4, password);
+    		pStmt.setString(4, passwordCode);
     		pStmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -241,8 +249,9 @@ public UserMyself upDate(String password,String name,String birth_Date,int id){
 
 		/**SELEを実行して、結果の表を取得する**/
 		/**取得してrsにexecuteQueryメソッドでセット**/
+		String passwordCode = encryption(password);
 		PreparedStatement pStmt = conn.prepareStatement(sql);
-		pStmt.setString(1, password);
+		pStmt.setString(1, passwordCode);
 		pStmt.setString(2, name);
 		pStmt.setString(3, birth_Date);
 		pStmt.setInt(4, id);
@@ -309,6 +318,35 @@ public  UserMyself delate(int id){
 		}
 	}
 	return null;
+}
+
+/**暗号化するメソッドを作る
+ * ・String型の変数を暗号化して戻り値でString型の文字列で返す。
+ * ・それを登録、更新、ログインの際に呼び出してからそれぞれのメソッドを呼び出す。
+ * @throws NoSuchAlgorithmException
+ *
+ * **/
+public String encryption(String password){
+	//ハッシュを生成したい元の文字列
+	String source = password;
+	//ハッシュ生成前にバイト配列に置き換える際のCharset
+	Charset charset = StandardCharsets.UTF_8;
+	//ハッシュアルゴリズム
+	String algorithm = "MD5";
+
+	//ハッシュ生成処理
+	byte[] bytes = null;
+	try {
+		bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
+	} catch (NoSuchAlgorithmException e) {
+		// TODO 自動生成された catch ブロック
+		e.printStackTrace();
+	}
+	String result = DatatypeConverter.printHexBinary(bytes);
+	System.out.println(result);
+
+	return result;
+
 }
 
 }

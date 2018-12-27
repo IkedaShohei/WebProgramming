@@ -12,9 +12,11 @@
 
 
 <!-- もしDaoのメソッドを実行して入力されたデータが見つからなかった場合のメッセージ -->
-<c:if test="${errMsg != null}" >
-		  ${errMsg}
-</c:if>
+<div class="errRed">	
+	<c:if test="${errMsg != null}" >
+			  ${errMsg}
+	</c:if>
+</div>
 
 <body>
 	<h1 class="Login">ログイン画面</h1>
