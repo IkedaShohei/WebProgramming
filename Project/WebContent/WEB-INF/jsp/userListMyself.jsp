@@ -27,18 +27,19 @@
 		<br>
 		<br>
 		<br>
-	<div class="center">
-		<a>ログインID</a><input type="text" name="loginId">
-		<br>
-		<a>ユーザ名</a><input type="text" name="passWord">
-		<br>
-		生年月日<input type="date" name="passWord">〜<input type="date" name="passWord">
-		<br>
-	</div>
-	<div class="right">
-	<input type="submit" value="検索">
-	</div>
-
+	<form action= "UserListServletMyself" method ="post">
+		<div class="center">
+			<a>ログインID</a><input type="text" name="loginId">
+			<br>
+			<a>ユーザ名</a><input type="text" name="userName">
+			<br>
+			生年月日<input type="date" name="birthDayStart">〜<input type="date" name="birthDayEnd">
+			<br>
+		</div>
+		<div class="right">
+		<input type="submit" value="検索">
+		</div>
+	</form>
 	<p class="border"> </p>
 
 	<br>
@@ -67,9 +68,12 @@
 			</c:if>
 	<!-- もし管理者（admin）だったら、終わり -->
 	<!-- もし管理者じゃなかったら -->
+
 			<c:if test="${!userInfoMyself.loginId.equals('admin')}">
-					 <a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
+				 <a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
+				<c:if test="${userInfoMyself.loginId.equals(userMyself.loginId)}">
 	                 <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
+				</c:if>
 			</c:if>
 	<!-- もし管理者じゃなかったら、終わり -->
 

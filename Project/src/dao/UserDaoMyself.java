@@ -126,6 +126,78 @@ public class UserDaoMyself {
 
     }
 
+    public List<UserMyself> Retrieval(){
+    	Connection conn = null;
+    	List<UserMyself> userMyselfList = new ArrayList<UserMyself>();
+
+    	try {
+    		/**Connection**/
+    		/**データベースに接続**/
+    		conn = DBmanagerMyself.getConnection();
+
+    		/**SELECT文を準備**/
+    		/**これuserテーブルを全部**/
+    		String sql = "SELECT * FROM user WHERE id != 1";
+
+
+    		//if文で入力によってSELECT文に追加するSQL文を分岐させる
+//    		例えば
+//    		if(!(loginId.isEmpty)) {
+//    			sql += " And loginId''"
+//    		}
+    		//みたいな感じ
+
+
+    		/**もしログインIDがからじゃなかったら（ログインIDが入力されていたら）**/
+    		/**この場合はログインIDは固有だから分岐しない**/
+
+    		if(!)) {
+
+    		}
+
+
+    		/**SELECTを実行して、結果の表を取得する**/
+    		/**取得してrsにexecuteQueryメソッドでセット**/
+    		Statement stmt = conn.createStatement();
+    		ResultSet rs = stmt.executeQuery(sql);
+
+    		/**結果表に格納されたレコードの内容をwhileを回してそれぞれ変数に入れていく**/
+    		/**getの中身はまだSQL語なのでテーブルのカラム名通りに入力していく**/
+    		while(rs.next()){
+    			int id = rs.getInt("id");
+    			String loginId = rs.getString("login_Id");
+    			String name = rs.getString("name");
+    			Date birthDate = rs.getDate("birth_Date");
+    			String password = rs.getString("password");
+    			String createDate = rs.getString("create_Date");
+    			String updateDate = rs.getString("update_Date");
+    			/**UserMyselfのインスタンスを生成して設定してコンストラクタに引数を全部渡す
+    			 上で作ったArrayListインスタンス(userMyselfList)に追加**/
+    			UserMyself userMyself = new UserMyself(id,loginId,name,birthDate,password,createDate,updateDate);
+    			userMyselfList.add(userMyself);
+    		}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}finally{
+			/**データベースを切断する**/
+			/**finallyは例外をキャッチした場合もしてない場合も必ず実行する**/
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+
+		return userMyselfList;
+
+    }
+
 //    INSERTするメソッドを作る
     public  UserMyself NewSighUpInfo(String loginId, String userName, String password, String birthDay)throws SQLException{
     	Connection conn = null;
