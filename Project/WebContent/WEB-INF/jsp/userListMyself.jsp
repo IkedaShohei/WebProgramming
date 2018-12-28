@@ -60,14 +60,14 @@
 					<td>${userMyself.birthDate}</td>
 					<td>
 	<!-- もし管理者（admin）だったら -->
-			<c:if test="${userMyself.name.equals(admin)}">
+			<c:if test="${userInfoMyself.loginId.equals('admin')}">
 				<a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
 	            <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
 	            <a class="btn btn-danger" href ="UserDeleteServletMyself?id=${userMyself.id}">削除</a>
 			</c:if>
 	<!-- もし管理者（admin）だったら、終わり -->
 	<!-- もし管理者じゃなかったら -->
-			<c:if test="${!userMyself.name.equals(admin)}">
+			<c:if test="${!userInfoMyself.loginId.equals('admin')}">
 					 <a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
 	                 <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
 			</c:if>
