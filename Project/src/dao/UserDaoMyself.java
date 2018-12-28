@@ -163,18 +163,15 @@ public class UserDaoMyself {
     			sql += " And name LIKE '%"+userNameRetrieval+"%'";
     		}
 
-//   	/**もし生年月日の前が空じゃなかったら（生年月日の前が入力されていたら）**/
-//    		if(!(birthDayStartRetrieval.isEmpty())){
-//    			sql += " And birth_Date >= '"+birthDayStartRetrieval+"'";
-//    		}
-//
-//   	/**もし生年月日の後ろが空じゃなかったら（生年月日の後ろが入力されていたら）**/
-//    		if(!(birthDayEndRetrieval.isEmpty())){
-//    			sql += " And birth_Date <= '"+birthDayEndRetrieval+"'";
-//    		}
+   	/**もし生年月日の前が空じゃなかったら（生年月日の前が入力されていたら）**/
+    		if(!(birthDayStartRetrieval.isEmpty())){
+    			sql += " And birth_Date >= '"+birthDayStartRetrieval+"'";
+    		}
 
-
-
+   	/**もし生年月日の後ろが空じゃなかったら（生年月日の後ろが入力されていたら）**/
+    		if(!(birthDayEndRetrieval.isEmpty())){
+    			sql += " And birth_Date <= '"+birthDayEndRetrieval+"'";
+    		}
 
     		/**SELECTを実行して、結果の表を取得する**/
     		/**取得してrsにexecuteQueryメソッドでセット**/
