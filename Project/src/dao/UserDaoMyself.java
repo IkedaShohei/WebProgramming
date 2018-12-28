@@ -82,7 +82,7 @@ public class UserDaoMyself {
 
     		/**SELECT文を準備**/
     		/**これuserテーブルを全部**/
-    		String sql = "SELECT * FROM user";
+    		String sql = "SELECT * FROM user WHERE id != 1";
 
     		/**SELECTを実行して、結果の表を取得する**/
     		/**取得してrsにexecuteQueryメソッドでセット**/
