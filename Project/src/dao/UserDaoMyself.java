@@ -126,7 +126,7 @@ public class UserDaoMyself {
 
     }
 
-    public List<UserMyself> Retrieval(){
+    public List<UserMyself> Retrieval(String loginIdRetrieval, String userNameRetrieval, String birthDayStartRetrieval, String birthDayEndRetrieval){
     	Connection conn = null;
     	List<UserMyself> userMyselfList = new ArrayList<UserMyself>();
 
@@ -143,17 +143,37 @@ public class UserDaoMyself {
     		//if文で入力によってSELECT文に追加するSQL文を分岐させる
 //    		例えば
 //    		if(!(loginId.isEmpty)) {
-//    			sql += " And loginId''"
+//    			sql += " And loginId = loginId''"
 //    		}
     		//みたいな感じ
 
 
-    		/**もしログインIDがからじゃなかったら（ログインIDが入力されていたら）**/
-    		/**この場合はログインIDは固有だから分岐しない**/
+    /**もしログインIDがからじゃなかったら（ログインIDが入力されていたら）**/
+   	/**この場合はログインIDは固有だから分岐しない**/
 
-    		if(!)) {
-
+    		if(!(loginIdRetrieval.isEmpty())) {
+    	/**ここ大事！！！！**/
+    	/**sql文の文脈とJavaの文脈が混ざってるから**/
+    	/**シングルクォーテーションとダブルクォーテーションが混在してるから注意**/
+    			sql += " And login_Id = '"+loginIdRetrieval+"'";
     		}
+
+    /**もしユーザ名が空じゃなかったら（ユーザ名が入力されていたら）**/
+    		if(!(userNameRetrieval.isEmpty())){
+    			sql += " And name LIKE '%"+userNameRetrieval+"%'";
+    		}
+
+//   	/**もし生年月日の前が空じゃなかったら（生年月日の前が入力されていたら）**/
+//    		if(!(birthDayStartRetrieval.isEmpty())){
+//    			sql += " And birth_Date >= '"+birthDayStartRetrieval+"'";
+//    		}
+//
+//   	/**もし生年月日の後ろが空じゃなかったら（生年月日の後ろが入力されていたら）**/
+//    		if(!(birthDayEndRetrieval.isEmpty())){
+//    			sql += " And birth_Date <= '"+birthDayEndRetrieval+"'";
+//    		}
+
+
 
 
     		/**SELECTを実行して、結果の表を取得する**/

@@ -42,9 +42,32 @@ public class UserListServletMyself extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 
 		/**フォームの中の情報で検索する機能をつける**/
+
+		/**とりあえず文字化け防止**/
+		request.setCharacterEncoding("UTF-8");
+
+		/**リクエストパラメータの取得**/
+		/**getParameter()メソッドにformで指定したリクエストパラメータの名前を
+		引数にすることでパラメータが取得できる**/
+		String loginIdRetrieval = request.getParameter("loginId");
+		String userNameRetrieval = request.getParameter("userName");
+		String birthDayStartRetrieval = request.getParameter("birthDayStart");
+		String birthDayEndRetrieval = request.getParameter("birthDayEnd");
+
+
+		/**ユーザの一覧情報を取得してBeansのリストにfindallメソッドで
+		 * リストに情報を持ったインスタンスを入れていく**/
+		UserDaoMyself userDaoMyself = new UserDaoMyself();
+		List<UserMyself> userMyselfList = userDaoMyself.Retrieval(loginIdRetrieval,userNameRetrieval,birthDayStartRetrieval,birthDayEndRetrieval);
+
+		/**リクエストスコープで情報インスタンスを格納したリストを合言葉と一緒にセット**/
+		request.setAttribute("userMyselfList", userMyselfList);
+
+		/**ユーザ一覧のjsp（userListMyself.jsp"）にフォワード**/
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userListMyself.jsp");
+		dispatcher.forward(request, response);
 
 	}
 
