@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class UserDeleteCancelServlet
@@ -28,6 +29,15 @@ public class UserDeleteCancelServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//インスタンスを取得してセッションがあるか比べる準備
+		HttpSession session = request.getSession();
+		//もしセッションがなかったらログイン画面にリダイレクト
+		if(session.getAttribute("userInfoMyself") == null) {
+			/**LoginServletMyselfのサーブレットにリダイレクト**/
+			response.sendRedirect("LoginServletMyself");
+			return;
+		}
+
 //		UserListServletMyselfにリダイレクト
 //		データはUserListServletMyselfが表示させる
 		response.sendRedirect("UserListServletMyself");

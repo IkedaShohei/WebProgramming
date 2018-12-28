@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.UserDaoMyself;
 import model.UserMyself;
@@ -24,6 +25,15 @@ public class UserListServletMyself extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
+
+		//インスタンスを取得してセッションがあるか比べる準備
+		HttpSession session = request.getSession();
+		//もしセッションがなかったらログイン画面にリダイレクト
+		if(session.getAttribute("userInfoMyself") == null) {
+			/**LoginServletMyselfのサーブレットにリダイレクト**/
+			response.sendRedirect("LoginServletMyself");
+			return;
+		}
 
 		/**ユーザの一覧情報を取得してBeansのリストにfindallメソッドで
 		 * リストに情報を持ったインスタンスを入れていく**/

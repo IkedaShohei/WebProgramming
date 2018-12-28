@@ -26,6 +26,19 @@ public class LoginServletMyself extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		/**ログインセッションがある場合、ユーザ一覧画面にリダイレクトさせる**/
+
+		//インスタンスを取得してセッションがあるか比べる準備
+		HttpSession session = request.getSession();
+		//もしセッションがあったらログイン画面にリダイレクト
+		if(session.getAttribute("userInfoMyself") != null) {
+			/**LoginServletMyselfのサーブレットにリダイレクト**/
+			response.sendRedirect("UserListServletMyself");
+			return;
+		}
+
+
+
 		/**フォワードする**/
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginMyself.jsp");
 		dispatcher.forward(request, response);

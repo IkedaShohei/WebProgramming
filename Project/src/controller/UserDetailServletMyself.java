@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.UserDaoMyself;
 import model.UserMyself;
@@ -31,6 +32,16 @@ public class UserDetailServletMyself extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		//インスタンスを取得してセッションがあるか比べる準備
+		HttpSession session = request.getSession();
+		//もしセッションがなかったらログイン画面にリダイレクト
+		if(session.getAttribute("userInfoMyself") == null) {
+			/**LoginServletMyselfのサーブレットにリダイレクト**/
+			response.sendRedirect("LoginServletMyself");
+			return;
+		}
+
 		/**文字化け防止**/
 		request.setCharacterEncoding("UTF-8");
 
