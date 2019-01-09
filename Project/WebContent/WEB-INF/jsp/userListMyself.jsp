@@ -47,40 +47,40 @@
 	<br>
 
 		<table>
-		<tr><!-- 項目 -->
-			<th>ログインID</th>
-			<th>ユーザー名</th>
-			<th>生年月日</th>
-			<th>　　　　</th>
-		</tr>
-		<c:forEach var="userMyself" items="${userMyselfList}" >
+			<tr><!-- 項目 -->
+				<th>ログインID</th>
+				<th>ユーザー名</th>
+				<th>生年月日</th>
+				<th>　　　　</th>
+			</tr>
+			<c:forEach var="userMyself" items="${userMyselfList}" >
 
-				<tr>
-					<td>${userMyself.loginId}</td>
-					<td>${userMyself.name}</td>
-					<td>${userMyself.birthDate}</td>
-					<td>
-	<!-- もし管理者（admin）だったら -->
-			<c:if test="${userInfoMyself.loginId.equals('admin')}">
-				<a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
-	            <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
-	            <a class="btn btn-danger" href ="UserDeleteServletMyself?id=${userMyself.id}">削除</a>
-			</c:if>
-	<!-- もし管理者（admin）だったら、終わり -->
-	<!-- もし管理者じゃなかったら -->
-
-			<c:if test="${!userInfoMyself.loginId.equals('admin')}">
-				 <a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
-				<c:if test="${userInfoMyself.loginId.equals(userMyself.loginId)}">
-	                 <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
+					<tr>
+						<td>${userMyself.loginId}</td>
+						<td>${userMyself.name}</td>
+						<td>${userMyself.birthDate}</td>
+						<td>
+		<!-- もし管理者（admin）だったら -->
+				<c:if test="${userInfoMyself.loginId.equals('admin')}">
+					<a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
+		            <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
+		            <a class="btn btn-danger" href ="UserDeleteServletMyself?id=${userMyself.id}">削除</a>
 				</c:if>
-			</c:if>
-	<!-- もし管理者じゃなかったら、終わり -->
+		<!-- もし管理者（admin）だったら、終わり -->
+		<!-- もし管理者じゃなかったら -->
 
-					</td>
-				</tr>
+				<c:if test="${!userInfoMyself.loginId.equals('admin')}">
+					 <a class="btn btn-primary" href="UserDetailServletMyself?id=${userMyself.id}">詳細</a>
+					<c:if test="${userInfoMyself.loginId.equals(userMyself.loginId)}">
+		                 <a class="btn btn-success" href="UserUpdateServletMyself?id=${userMyself.id}">更新</a>
+					</c:if>
+				</c:if>
+		<!-- もし管理者じゃなかったら、終わり -->
 
-		</c:forEach>
+						</td>
+					</tr>
+
+			</c:forEach>
 		</table>
 </body>
 </html>
